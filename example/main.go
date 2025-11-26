@@ -57,8 +57,11 @@ func main() {
 		log.Fatalf("could not create page: %v", err)
 	}
 
-	// Inject stealth script
-	err = stealth.Inject(pageWithStealth)
+	// Inject stealth script with additional Chrome stealth options
+	// This enables extra evasions for Cloudflare and other bot detection
+	err = stealth.InjectWithOptions(pageWithStealth, stealth.Options{
+		ChromeStealth: true,
+	})
 	if err != nil {
 		log.Fatalf("could not inject stealth script: %v", err)
 	}
